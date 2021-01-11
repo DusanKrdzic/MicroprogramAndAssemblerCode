@@ -1,0 +1,200 @@
+// dataSize - Sirina podatka. Iste su sirine AB, BB i ALU. Dozvoljene vrednost 8 i 16
+
+"dataSize", "16"
+
+// numberOfRegisters - Broj registara opste namene u procesoru. Dozvoljene vrednost 0, 2, 4, 8, 16, 32 i 64
+
+"numberOfRegisters", "4"
+
+// GPRARStartPosition - Pozicija unutar reci na magistrali koja odredjuje pocetni bit koji specificira kom registru opste namene se pristupa.
+
+// Primer: ako biti 2 do 5 odredju registar opste namene onda je pocetna pozicija 2.
+
+"GPRARStartPosition", "0"
+
+
+// GPRNumberOfBits - Broj bita potrebnih za adresiranje unutar registarskog fajla od numberOfRegisters registara.
+
+"GPRNumberOfBits", "2"
+
+
+"memdelay", "5"
+
+
+"addressableUnit", "8"
+
+
+"FETCH1", "TRI", "IRAD", "16", "Oper1.IRDAout3","IR8", "IR9", "IR10", "IR11", "IR12", "IR13", "IR14", "IR15", "IR16", "IR17", "IR18", "IR19", "IR20", "IR21", "IR22", "IR23" ,"IRAD"
+
+"FETCH1", "TRI", "IRJA", "16", "Oper1.IRJAout2", "IR8", "IR9", "IR10", "IR11", "IR12", "IR13", "IR14", "IR15", "IR16", "IR17", "IR18", "IR19", "IR20", "IR21", "IR22", "IR23", "IRJA"
+
+"FETCH1", "TRI", "IRPOM", "16", "Oper1.IRPOMout3" ,"IR16","IR17","IR18","IR19","IR20","IR21","IR22","IR23","IR23","IR23","IR23","IR23","IR23","IR23","IR23","IR23","IRPOM"
+
+"FETCH1", "TRI", "IRBR", "4", "Oper1.IRBRout3", "IR24", "IR25", "IR26", "IR27" ,"IRBR"
+
+//dekoderi za instr
+
+"FETCH2", "DC", "DC1", "4", "START", "IR28", "IR29", "IR30", "IR31", "G0_usl", "G0_bezusl", "LD", "STORE", "STOREL", "SWAP", "ADD", "SUB", "AND", "OR", "XOR", "NOT", "greska1", "greska2", "greska3", "G0_bezadr"
+
+"FETCH2", "DC", "DC2", "4", "G0_bezadr", "IR24", "IR25", "IR26", "IR27", "RTS", "RTI", "ASR", "LSR", "ROR", "ASL", "LSL", "ROL", "INTE", "INTD", "STIVTP", "STSP", "PUSH", "POP", "HALT", "NOP"
+
+"FETCH2", "DC", "DC3", "4", "G0_usl", "IR24", "IR25", "IR26", "IR27",  "BGRT", "BGRE", "BLSS", "BLEQ", "BGRTU", "BGREU", "BLSSU", "BLEQU" ,"BEQL", "BNEQ", "BNEG", "BNNG", "BOVF", "BNVF", "BCR", "BNCR"
+
+"FETCH2", "DC", "DC4", "1", "G0_bezusl", "IR24", "JMP", "JSR"
+
+"FETCH2", "DC", "DC5", "2", "1", "IR26", "IR27", "memdir", "memind", "regdir", "immed"
+
+//duzina instr
+
+"FETCH3", "OR", "ORbez", "16", "Fetch2.RTS", "Fetch2.RTI", "Fetch2.ASR", "Fetch2.LSR", "Fetch2.ROR", "Fetch2.ASL", "Fetch2.LSL", "Fetch2.ROL", "Fetch2.INTE", "Fetch2.INTD", "Fetch2.STIVTP", "Fetch2.STSP", "Fetch2.PUSH", "Fetch2.POP", "Fetch2.NOP", "Fetch2.HALT", "L1"
+
+"FETCH3", "OR", "ORL3_jump", "2", "Fetch2.JSR", "Fetch2.JMP", "L3_JUMP"
+"FETCH3","OR", "ORstore", "2","Fetch2.STORE","Fetch2.STOREL","store"
+
+"FETCH3", "OR", "ORgreska", "3", "Fetch2.greska1", "Fetch2.greska2", "Fetch2.greska3", "gropr"
+
+"FETCH3", "OR", "OR_L1A", "10", "Fetch2.LD", "Fetch2.STORE", "Fetch2.STOREL", "Fetch2.SWAP", "Fetch2.ADD", "Fetch2.SUB", "Fetch2.AND", "Fetch2.OR", "Fetch2.XOR", "Fetch2.NOT", "OR_L1A"
+
+"FETCH3", "AND", "AND_L1_ARL", "2", "OR_L1A", "Fetch2.REGDIR", "L1_ARLOG"
+
+"FETCH3", "AND","ADRgreska" ,"2", "immed", "swapstorelstore", "gradr"
+
+"FETCH3", "OR", "OR_L2JMP", "16", "Fetch2.BEQL", "Fetch2.BNEQ", "Fetch2.BNEG", "Fetch2.BNNG", "Fetch2.BOVF", "Fetch2.BNVF", "Fetch2.BCR", "Fetch2.BNCR", "Fetch2.BGRT", "Fetch2.BGRE", "Fetch2.BLSS", "Fetch2.BLEQ", "Fetch2.BGRTU", "Fetch2.BGREU", "Fetch2.BLSSU", "Fetch2.BLEQU", "L2_JUMP"
+
+"FETCH3", "OR", "ORstorelswap", "3", "Fetch2.SWAP", "Fetch2.STOREL","Fetch2.STORE" ,"swapstorelstore"
+
+
+"EXEC3", "OR", "NZOR", "14", "Fetch2.LD", "Fetch2.POP", "Fetch2.ADD", "Fetch2.SUB", "Fetch2.AND", "Fetch2.OR", "Fetch2.XOR", "Fetch2.NOT", "Fetch2.ASR", "Fetch2.LSR", "Fetch2.ROR", "Fetch2.ASL", "Fetch2.LSL", "Fetch2.ROL", "NZOR"
+
+
+
+"KMOPR1", "Fetch2.NOP", "B0h"
+
+"KMOPR1", "Fetch2.HALT", "B1h"
+
+"KMOPR1", "Fetch2.INTD", "35h"
+
+"KMOPR1", "Fetch2.INTE", "34h"
+
+"KMOPR1", "Fetch2.LD", "36h"
+
+"KMOPR1", "Fetch2.STORE", "38h"
+
+"KMOPR1", "Fetch2.STOREL", "41h"
+
+"KMOPR1", "Fetch2.POP", "7Ch"
+
+"KMOPR1", "Fetch2.PUSH", "75h"
+
+"KMOPR1", "Fetch2.STSP", "74h"
+"KMOPR1", "Fetch2.STIVTP", "73h"
+"KMOPR1", "Fetch2.SWAP", "8Ah"
+
+"KMOPR1", "Fetch2.ADD", "48h"
+
+"KMOPR1", "Fetch2.SUB", "4Ch"
+
+"KMOPR1", "Fetch2.AND", "4Ah"
+
+"KMOPR1", "Fetch2.OR", "4Eh"
+
+"KMOPR1", "Fetch2.XOR", "50h"
+
+"KMOPR1", "Fetch2.NOT", "52h"
+
+"KMOPR1", "Fetch2.ASR", "6Fh"
+
+"KMOPR1", "Fetch2.LSR", "6Fh"
+
+"KMOPR1", "Fetch2.ROR", "6Fh"
+
+"KMOPR1", "Fetch2.ASL", "71h"
+
+"KMOPR1", "Fetch2.LSL", "71h"
+
+"KMOPR1", "Fetch2.ROL", "71h"
+
+"KMOPR1", "Fetch2.BEQL", "88h"
+
+"KMOPR1", "Fetch2.BNEQ", "88h"
+
+"KMOPR1", "Fetch2.BNEG", "88h"
+
+"KMOPR1", "Fetch2.BNNG", "88h"
+
+"KMOPR1", "Fetch2.BOVF", "88h"
+
+"KMOPR1", "Fetch2.BNVF", "88h"
+
+"KMOPR1", "Fetch2.BCR", "88h"
+
+"KMOPR1", "Fetch2.BNCR", "88h"
+
+"KMOPR1", "Fetch2.BGRT", "88h"
+
+"KMOPR1", "Fetch2.BGRE", "88h"
+
+"KMOPR1", "Fetch2.BLSS", "88h"
+
+"KMOPR1", "Fetch2.BLEQ", "88h"
+
+"KMOPR1", "Fetch2.BGRTU", "88h"
+
+"KMOPR1", "Fetch2.BGREU", "88h"
+
+"KMOPR1", "Fetch2.BLSSU", "88h"
+
+"KMOPR1", "Fetch2.BLEQU", "88h"
+
+"KMOPR1", "Fetch2.JMP", "5Bh"
+
+"KMOPR1", "Fetch2.JSR", "54h"
+
+"KMOPR1", "Fetch2.RTS", "5Ch"
+
+"KMOPR1", "Fetch2.RTI", "66h"
+
+
+"KMADR1", "Fetch2.regdir", "16h"
+
+"KMADR1", "Fetch2.memdir", "18h"
+
+"KMADR1", "Fetch2.memind", "20h"
+
+"KMADR1", "Fetch2.immed", "31h"
+
+
+
+
+
+
+"CONTRODC", "0", "", "", "next" 
+"CONTRODC", "1", "", "", "br"
+"CONTRODC", "2", "Exec2.START", "#"
+"CONTRODC", "3", "Bus1.hack", ""
+"CONTRODC", "4", "Bus1.fcCPU", "#"
+"CONTRODC", "5", "Fetch3.L1", ""
+"CONTRODC", "6", "Fetch3.L2_JUMP", ""
+"CONTRODC", "7", "Fetch3.L3_JUMP", ""
+"CONTRODC", "8", "Fetch3.L1_ARLOG", ""
+"CONTRODC", "9", "Fetch3.store", ""
+"CONTRODC", "10", "Fetch2.regdir", ""
+"CONTRODC", "11", "Fetch3.swapstorelstore", ""
+"CONTRODC", "12", "Exec4.brpom", "#"
+"CONTRODC", "13", "Intr1.prekid", "#"
+"CONTRODC", "14", "Intr1.PRINS", "#"
+"CONTRODC", "15", "Intr1.PRCOD", "#"
+"CONTRODC", "16", "Intr1.PRADR", "#"
+"CONTRODC", "17", "Intr1.PRINM", "#"
+"CONTRODC", "18", "Intr2.printr", "#"
+"CONTRODC", "19", "", "", "bradr"
+"CONTRODC", "20", "", "", "bropr"
+"CONTRODC", "21", "Fetch2.immed", ""
+"CONTRODC", "22", "Fetch3.gropr", "#"
+"CONTRODC", "23", "Fetch3.gradr", "#"
+
+
+
+
+
+
