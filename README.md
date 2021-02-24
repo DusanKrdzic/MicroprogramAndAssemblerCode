@@ -7,4 +7,4 @@ Asemblerski kod (codetest3b.txt) za sortiranje niza brojeva koji se nalazi u mem
 ====================================
 
 Microprogram (microProgram.txt) and processor configuration (konfiguracija.txt). 
-Assembler code (codetest3b.txt) for sorting an array that is stored in memorty (merge sort)
+Assembly code (codetest3b.txt) for sorting an array that is stored in memory (merge sort)
